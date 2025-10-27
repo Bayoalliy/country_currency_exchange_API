@@ -99,7 +99,7 @@ app.delete('/countries/:name', async (req, res) => {
 
 app.get('/countries/image', async (req, res) => {
   try {
-    const imagePath = '/app/cache/summary.png'
+    const imagePath = path.resolve('cache/summary.png')
     res.sendFile(imagePath, (err) => {
       if (err) {
         return res.status(404).json({"error": "Summary image not found"})
