@@ -124,7 +124,7 @@ class DBClient {
     const [top5] = await this.db.query(sql)
 
     if (!fs.existsSync("cache")) {
-      fs.mkdirSync(cache, { recursive: true });
+      fs.mkdirSync("cache", { recursive: true });
     }
     const top5Html = top5
       .map(c => `<li>${c.name} - ${c.estimated_gdp}</li>`)
