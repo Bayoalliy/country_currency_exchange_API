@@ -46,7 +46,7 @@ app.post('/countries/refresh', async (req, res) => {
     }
 
     console.log("country inserted successfully");
-    await db.generateImage(stat)
+    await db.generateImage()
     return res.status(201)
   } catch (err) {
     console.error(err)
