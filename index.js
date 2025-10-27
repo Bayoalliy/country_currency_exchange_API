@@ -97,6 +97,22 @@ app.delete('/countries/:name', async (req, res) => {
   }
 });
 
+app.get('/countries/image', async (req, res) => {
+  try {
+    const imagePath = path.join(__dirname, 'cache', 'summary.png')
+    res.sendFile(imagePath, (err) => {
+      if (err) {
+        return res.status(404).json({"error": "Summary image not dound"})
+      }
+    })
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json({
+      "error": "Internal server error"
+    });
+  }
+});
+
 
 app.get('/countries/:name', async (req, res) => {
   try {
@@ -114,23 +130,6 @@ app.get('/countries/:name', async (req, res) => {
     });
   }
 });
-
-app.get('/countries/image', async (req, res) => {
-  try {
-    const imagePath = path.join(__dirname, 'cache', 'summary.png')
-    res.sendFile(imagePath, (err) => {
-      if (err) {
-        return res.status(404).json({"error": "Summary image not dound"})
-      }
-    })
-  } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      "error": "Internal server error"
-    });
-  }
-});
-
 
 
 app.listen(port, () => {
