@@ -135,12 +135,10 @@ class DBClient {
     const html = `
       <div style="width:400px; height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#222; color:#fff; font-family:sans-serif;">
         <h1>Countries API Summary</h1>
-	<br/>
         <p>Total Countries: ${stat[0].total_countries}</p>
 	<ol>
           ${top5Html}
 	</ol>
-	<br/>
         <p>last_refreshed_at: ${stat[0].last_refreshed_at}</p>
       </div>
       `;
@@ -158,6 +156,8 @@ class DBClient {
       .png()
       .toFile('cache/summary.png');
 
+    console.log("Image saved to:", path.resolve('cache/summary.png'));
+    console.log("__dirname:", __dirname);
     console.log(`Summary Image created`);
   }
 }

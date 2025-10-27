@@ -102,7 +102,7 @@ app.get('/countries/image', async (req, res) => {
     const imagePath = path.join(__dirname, 'cache', 'summary.png')
     res.sendFile(imagePath, (err) => {
       if (err) {
-        return res.status(404).json({"error": "Summary image not dound"})
+        return res.status(404).json({"error": "Summary image not found"})
       }
     })
   } catch (err) {
