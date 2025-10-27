@@ -101,7 +101,9 @@ class DBClient {
       throw new Error(err)
     }
   }
-  async getStatus(filters)  {
+
+
+  async getStatus()  {
     const sql = `SELECT COUNT(*) AS total_countries, MAX(last_refreshed_at) AS last_refreshed_at FROM Countries`
     const [res] = await this.db.query(sql)
     return res
