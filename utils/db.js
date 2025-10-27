@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const fs = require("fs");
+const path = require('path');
 const sharp = require('sharp');
 const dotenv = require('dotenv');
 dotenv.config();
