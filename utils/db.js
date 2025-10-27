@@ -122,7 +122,7 @@ class DBClient {
 
   async generateImage() {
     const sql = `SELECT name, estimated_gdp FROM Countries ORDER BY estimated_gdp DESC LIMIT 5`
-    const stat = await this.getStatus()[0]
+    const stat = await this.getStatus()
     const [top5] = await this.db.query(sql)
 
     if (!fs.existsSync("cache")) {
@@ -136,12 +136,12 @@ class DBClient {
       <div style="width:400px; height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#222; color:#fff; font-family:sans-serif;">
         <h1>Countries API Summary</h1>
 	<br/>
-        <p>Total Countries: ${stat.total_countries}</p>
+        <p>Total Countries: ${stat[0].total_countries}</p>
 	<ol>
           ${top5Html}
 	</ol>
 	<br/>
-        <p>last_refreshed_at: ${stat.last_refreshed_at}</p>
+        <p>last_refreshed_at: ${stat[0].last_refreshed_at}</p>
       </div>
       `;
 
