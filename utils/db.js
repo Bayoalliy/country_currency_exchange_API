@@ -2,6 +2,7 @@ const mysql = require('mysql2/promise');
 const fs = require("fs");
 const path = require('path');
 const sharp = require('sharp');
+const { Resvg } = require('@resvg/resvg-js');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -147,14 +148,24 @@ class DBClient {
     const svg = `
       <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
         <foreignObject width="100%" height="100%">
-          ${html}
+	  <div xmlns="http://www.w3.org/1999/xhtml">
+            ${html}
+          </div>
         </foreignObject>
       </svg>
     `;
 
+    const resvg = new Resvg(svg, {
+      fitTo: {
+        mode: 'width',
+        value: 400
+      }
+    });
 
-    await sharp(Buffer.from(svg))
-      .png()
+    const pngData = resvg.render();
+    const pngBuffer = pngData.asPng();
+
+    await sharp(pngBuffer)
       .toFile('cache/summary.png');
 
     console.log("Image saved to:", path.resolve('cache/summary.png'));
