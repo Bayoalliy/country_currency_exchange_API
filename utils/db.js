@@ -130,10 +130,16 @@ class DBClient {
     if (!fs.existsSync("cache")) {
       fs.mkdirSync("cache", { recursive: true });
     }
+    /*
     const top5Html = top5
       .map(c => `<li>${c.name} - ${c.estimated_gdp}</li>`)
       .join('');
+    */
+    const top5Text = top5
+      .map((c, i) => `<tspan x="20" dy="25">${i + 1}. ${c.name} - ${c.estimated_gdp}</tspan>`)
+      .join('');
 
+/*
     const html = `
       <div style="width:400px; height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#222; color:#fff; font-family:sans-serif;">
         <h1>Countries API Summary</h1>
@@ -167,6 +173,36 @@ class DBClient {
 
     await sharp(pngBuffer)
       .toFile('cache/summary.png');
+*/
+
+
+    const svg = `
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#222"/>
+  <text x="200" y="40" font-size="18" fill="#fff" text-anchor="middle" font-family="sans-serif">
+    Countries API Summary
+  </text>
+  <text x="20" y="80" font-size="14" fill="#fff" font-family="sans-serif">
+    Total Countries: ${stat[0].total_countries}
+  </text>
+  <text x="20" y="110" font-size="14" fill="#fff" font-family="sans-serif">
+    ${top5Text}
+  </text>
+  <text x="20" y="260" font-size="12" fill="#aaa" font-family="monospace">
+    last_refreshed_at: ${stat[0].last_refreshed_at}
+  </text>
+</svg>
+`;
+
+    const resvg = new Resvg(svg, {
+	    fitTo: {
+		    mode: 'width',
+		    value: 400
+	    }
+    });
+    const pngData = resvg.render();
+    fs.writeFileSync('cache/summary.png', pngData.asPng());
+
 
     console.log("Image saved to:", path.resolve('cache/summary.png'));
     console.log("__dirname:", __dirname);
