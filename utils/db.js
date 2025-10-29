@@ -136,7 +136,7 @@ class DBClient {
       .join('');
     */
     const top5Text = top5
-      .map((c, i) => `<tspan x="20" dy="25">${i + 1}. ${c.name} - ${c.estimated_gdp}</tspan>`)
+      .map((c, i) => `<text x="20" y="110" font-size="14" fill="#fff" font-family="sans-serif">${i + 1}. ${c.name} - ${c.estimated_gdp}</text>`)
       .join('');
 
 /*
@@ -185,9 +185,7 @@ class DBClient {
   <text x="20" y="80" font-size="14" fill="#fff" font-family="sans-serif">
     Total Countries: ${stat[0].total_countries}
   </text>
-  <text x="20" y="110" font-size="14" fill="#fff" font-family="sans-serif">
     ${top5Text}
-  </text>
   <text x="20" y="260" font-size="12" fill="#aaa" font-family="monospace">
     last_refreshed_at: ${stat[0].last_refreshed_at}
   </text>
